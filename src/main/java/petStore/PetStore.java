@@ -35,11 +35,8 @@ public class PetStore extends Caller {
         log.new Success(responseModel.getId());
     }
 
-    public void findPetByStatus(String status) throws FailedCallException {
+    public List<Pet> findPetByStatus(String status) throws FailedCallException {
         Call<List<Pet>> findPetByStatus = services.findPetByStatus(status);
-        List<Pet> pets = perform(findPetByStatus, false, "findPetByStatus -> PetStoreServices");
-        for (Pet pet:pets) {
-            log.new Info(pet.getName() + " status: " + pet.getStatus());
-        }
+        return perform(findPetByStatus, true, "findPetByStatus -> PetStoreServices");
     }
 }
