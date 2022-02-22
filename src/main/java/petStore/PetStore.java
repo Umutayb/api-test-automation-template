@@ -1,7 +1,7 @@
 package petStore;
 
-import exceptions.FailedCallException;
 import models.pet.Pet;
+import org.junit.Assert;
 import retrofit2.Call;
 import utils.Caller;
 import utils.Printer;
@@ -14,7 +14,7 @@ public class PetStore extends Caller {
     public static PetStoreServices services = ServiceGenerator.generateService(PetStoreServices.class);
     Printer log = new Printer(PetStore.class);
 
-    public void addPet(String name, String status) throws FailedCallException {
+    public void addPet(String name, String status) {
         Pet pet = new Pet();
         pet.setName(name);
         pet.setStatus(status);
@@ -35,8 +35,11 @@ public class PetStore extends Caller {
         log.new Success(responseModel.getId());
     }
 
-    public List<Pet> findPetByStatus(String status) throws FailedCallException {
+    public void findPetByStatus(String status) {
         Call<List<Pet>> findPetByStatus = services.findPetByStatus(status);
-        return perform(findPetByStatus, true, "findPetByStatus -> PetStoreServices");
+        for (Pet pet: perform(findPetByStatus,true,"findPetByStatus -> PetStoreServices")) {
+            log.new Info(pet.getName() + ", status: " + pet.getStatus());
+            Assert.assertEquals(status,pet.getStatus());
+        }
     }
 }
