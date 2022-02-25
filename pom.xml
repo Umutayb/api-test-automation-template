@@ -11,7 +11,6 @@
     <url>https://github.com/Umutayb/Api-Automation-Sample</url>
 
     <properties>
-        <browser>Chrome</browser>
         <name>${project.name}</name>
         <cucumber.version>4.8.0</cucumber.version>
         <api.framework.version>0.1.8</api.framework.version>
