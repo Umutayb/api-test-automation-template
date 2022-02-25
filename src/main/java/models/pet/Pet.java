@@ -1,5 +1,7 @@
 package models.pet;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Pet {
@@ -9,6 +11,33 @@ public class Pet {
     List<String> photoUrls;
     List<Category> tags;
     String status;
+
+    public Pet(){}
+
+    public Pet(boolean defaultInitialization){
+        if (defaultInitialization){
+            setName("Takas");
+            setStatus("sold");
+            Pet.Category category = new Pet.Category();
+            category.setId(0L);
+            category.setName("Dogs");
+            setCategory(category);
+            setId(0L);
+            List<Pet.Category> tags = Collections.singletonList(category);
+            setTags(tags);
+            List<String> photoUrls = Arrays.asList("x", "y");
+            setPhotoUrls(photoUrls);
+        }
+    }
+
+    public Pet(String name, String status, Long id, Category category, List<String> photoUrls, List<Category> tags){
+        setPhotoUrls(photoUrls);
+        setTags(tags);
+        setCategory(category);
+        setStatus(status);
+        setId(id);
+        setName(name);
+    }
 
     public void setCategory(Category category) {this.category = category;}
 
@@ -34,7 +63,7 @@ public class Pet {
 
     public String getStatus() {return status;}
 
-    public class Category {
+    public static class Category {
         Long id;
         String name;
 

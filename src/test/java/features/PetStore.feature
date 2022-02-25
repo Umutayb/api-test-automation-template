@@ -1,5 +1,5 @@
-@ExchangeRateNotifier
-Feature: Exchange Rate Notifier
+@PetStore
+Feature: Pet Store Feature
 
   Scenario: Get the exchange rate
     * Post pet named Ruffles, with status available
