@@ -17,6 +17,8 @@ public class  PetStore extends Caller {
     public static PetStoreServices services = ServiceGenerator.generateService(PetStoreServices.class);
     Printer log = new Printer(PetStore.class);
 
+    Pet contextPet = new Pet();
+
     public void addPet(String name, String status) {
         Pet pet = new Pet();
         pet.setName(name);
@@ -27,6 +29,20 @@ public class  PetStore extends Caller {
         log.new Important(responseModel.getName());
         log.new Important(responseModel.getStatus());
         log.new Success(responseModel.getId());
+    }
+
+    public void getPetById(Long petId){
+        Call<Pet> getPet = services.getPetById(petId);
+        Pet response = perform(getPet, true, "getPetById -> PetStoreServices");
+        log.new Info("Pet name is: " + response.getName());
+        Assert.assertEquals(petId,response.getId());
+    }
+
+    public void deletePetById(Long petId){
+        Call<BaseResponse> getPet = services.deletePetById(petId);
+        BaseResponse response = perform(getPet, true, "deletePetById -> PetStoreServices");
+        response.printMessage();
+        Assert.assertEquals(200,response.getCode());
     }
 
     public void findPetByStatus(String status) {
@@ -43,6 +59,7 @@ public class  PetStore extends Caller {
         MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(),fileBody);
         Call<BaseResponse> uploadPetPic = services.uploadPetImage(petId, part);
         BaseResponse response = perform(uploadPetPic,true,"uploadPetPicture -> PetStoreServices");
+        response.printMessage();
         Assert.assertEquals(200,response.getCode());
     }
 }

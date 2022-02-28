@@ -15,4 +15,10 @@ public class PetStoreSteps {
 
     @Given("Post a picture for pet with id {}, with picture url: {}")
     public void postPetPic(Long petId, String url){petStore.uploadPetPicture(petId,url);}
+
+    @Given("Get pet with id: {}")
+    public void getPetById(Long petId){petStore.getPetById(petId);}
+
+    @Given("Delete pet with id: {}")
+    public void deletePetById(Long petId){petStore.deletePetById(petId);}
 }
