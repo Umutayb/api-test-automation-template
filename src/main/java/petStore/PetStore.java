@@ -17,7 +17,7 @@ public class  PetStore extends Caller {
     public static PetStoreServices services = ServiceGenerator.generateService(PetStoreServices.class);
     Printer log = new Printer(PetStore.class);
 
-    Pet contextPet = new Pet();
+    Pet thePet = new Pet();
 
     public void addPet(String name, String status) {
         Pet pet = new Pet();
