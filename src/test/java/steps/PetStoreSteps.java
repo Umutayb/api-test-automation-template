@@ -12,4 +12,7 @@ public class PetStoreSteps {
 
     @Given("Find pet and verify by status {}")
     public void findPetByStatus(String status){petStore.findPetByStatus(status.toLowerCase());}
+
+    @Given("Post a picture for pet with id {}, with picture url: {}")
+    public void postPetPic(Long petId, String url){petStore.uploadPetPicture(petId,url);}
 }

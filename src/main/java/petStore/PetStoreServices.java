@@ -1,9 +1,10 @@
 package petStore;
 
+import models.commons.BaseResponse;
 import models.pet.Pet;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.*;
-
 import java.util.List;
 
 public interface PetStoreServices {
@@ -17,4 +18,8 @@ public interface PetStoreServices {
     @Headers({"accept: application/json"})
     @GET(BASE_URL + PetStoreApi.PET_SUFFIX + PetStoreApi.FIND_BY_STATUS_SUFFIX)
     Call<List<Pet>> findPetByStatus(@Query("status") String status);
+
+    @Multipart
+    @POST(BASE_URL + PetStoreApi.PET_SUFFIX + "{petId}/" + PetStoreApi.UPLOAD_IMAGE)
+    Call<BaseResponse> uploadPetImage(@Path(value = "petId") Long petId, @Part MultipartBody.Part file);
 }
