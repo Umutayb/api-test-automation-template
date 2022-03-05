@@ -14,7 +14,8 @@ import java.io.File;
 import java.util.List;
 
 public class  PetStore extends Caller {
-    public static PetStoreServices services = ServiceGenerator.generateService(PetStoreServices.class);
+
+    PetStoreServices services = ServiceGenerator.generateService(PetStoreServices.class);
     Printer log = new Printer(PetStore.class);
 
     Pet thePet = new Pet();
