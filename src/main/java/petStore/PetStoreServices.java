@@ -11,7 +11,6 @@ public interface PetStoreServices {
 
     String BASE_URL = PetStoreApi.BASE_URL;
 
-    @Headers({"accept: application/json","Content-Type: application/json"})
     @POST(BASE_URL + PetStoreApi.PET_SUFFIX)
     Call<Pet> postPet(@Body Pet pet);
 
@@ -19,15 +18,12 @@ public interface PetStoreServices {
     @PUT(BASE_URL + PetStoreApi.PET_SUFFIX)
     Call<Pet> updatePet(@Body Pet pet);
 
-    @Headers({"accept: application/json"})
     @GET(BASE_URL + PetStoreApi.PET_SUFFIX + "{petId}/")
     Call<Pet> getPetById(@Path("petId") Long petId);
 
-    @Headers({"accept: application/json"})
     @DELETE(BASE_URL + PetStoreApi.PET_SUFFIX + "{petId}/")
     Call<BaseResponse> deletePetById(@Path("petId") Long petId);
 
-    @Headers({"accept: application/json"})
     @GET(BASE_URL + PetStoreApi.PET_SUFFIX + PetStoreApi.FIND_BY_STATUS_SUFFIX)
     Call<List<Pet>> findPetByStatus(@Query("status") String status);
 

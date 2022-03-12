@@ -1,7 +1,7 @@
 @PetStore
 Feature: Pet Store Feature
 
-  Scenario: Get the exchange rate
+  Scenario: Post pet
     * Post pet named Ruffles, with status available
 
   Scenario: Get Pets By Status

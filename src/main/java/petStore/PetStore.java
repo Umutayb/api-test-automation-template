@@ -7,6 +7,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import org.junit.Assert;
 import retrofit2.Call;
+import retrofit2.Response;
 import utils.Caller;
 import utils.Printer;
 import utils.ServiceGenerator;
@@ -59,8 +60,10 @@ public class  PetStore extends Caller {
         RequestBody fileBody = RequestBody.create(file, MediaType.parse("image/png"));
         MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(),fileBody);
         Call<BaseResponse> uploadPetPic = services.uploadPetImage(petId, part);
-        BaseResponse response = perform(uploadPetPic,true,"uploadPetPicture -> PetStoreServices");
-        response.printMessage();
-        Assert.assertEquals(200,response.getCode());
+        Response<BaseResponse> response = getResponse(uploadPetPic,true,"uploadPetPicture -> PetStoreServices");
+        log.new Info(response.headers());
+        assert response.body() != null;
+        log.new Info(response.body().getMessage());
+        Assert.assertEquals("application/json", response.headers().get("content-type"));
     }
 }
