@@ -14,7 +14,7 @@ The dependency can be acquired by adding Jitpack repository into the pom.xml, as
         <dependency>
             <groupId>com.github.Umutayb</groupId>
             <artifactId>Api-Assured</artifactId>
-            <version>0.1.8</version>
+            <version>0.2.2</version>
         </dependency>   
 </dependencies>
 .
