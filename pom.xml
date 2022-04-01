@@ -13,7 +13,7 @@
     <properties>
         <name>${project.name}</name>
         <cucumber.version>4.8.0</cucumber.version>
-        <api.framework.version>0.2.2</api.framework.version>
+        <api.framework.version>0.3.2</api.framework.version>
         <maven.surefire.version>2.22.1</maven.surefire.version>
     </properties>
 

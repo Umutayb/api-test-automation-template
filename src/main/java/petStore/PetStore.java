@@ -19,15 +19,13 @@ public class  PetStore extends Caller {
     PetStoreServices services = ServiceGenerator.generateService(PetStoreServices.class);
     Printer log = new Printer(PetStore.class);
 
-    Pet thePet = new Pet();
-
     public void addPet(String name, String status) {
         Pet pet = new Pet();
         pet.setName(name);
         pet.setStatus(status);
 
         Call<Pet> postPet = services.postPet(pet);
-        Pet responseModel = perform(postPet, true, "postPet -> PetStoreServices");
+        Pet responseModel = perform(postPet, true, true, "postPet -> PetStoreServices");
         log.new Important(responseModel.getName());
         log.new Important(responseModel.getStatus());
         log.new Success(responseModel.getId());
@@ -35,21 +33,21 @@ public class  PetStore extends Caller {
 
     public void getPetById(Long petId){
         Call<Pet> getPet = services.getPetById(petId);
-        Pet response = perform(getPet, true, "getPetById -> PetStoreServices");
+        Pet response = perform(getPet, true, false, "getPetById -> PetStoreServices");
         log.new Info("Pet name is: " + response.getName());
         Assert.assertEquals(petId,response.getId());
     }
 
     public void deletePetById(Long petId){
         Call<BaseResponse> getPet = services.deletePetById(petId);
-        BaseResponse response = perform(getPet, true, "deletePetById -> PetStoreServices");
-        response.printMessage();
+        BaseResponse response = perform(getPet, true, false, "deletePetById -> PetStoreServices");
+        log.new Info("The response message is: " + response.getMessage());
         Assert.assertEquals(200,response.getCode());
     }
 
     public void findPetByStatus(String status) {
         Call<List<Pet>> findPetByStatus = services.findPetByStatus(status);
-        for (Pet pet: perform(findPetByStatus,true,"findPetByStatus -> PetStoreServices")) {
+        for (Pet pet: perform(findPetByStatus,true, false, "findPetByStatus -> PetStoreServices")) {
             log.new Info(pet.getName() + ", status: " + pet.getStatus());
             Assert.assertEquals(status,pet.getStatus());
         }
@@ -60,10 +58,10 @@ public class  PetStore extends Caller {
         RequestBody fileBody = RequestBody.create(file, MediaType.parse("image/png"));
         MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(),fileBody);
         Call<BaseResponse> uploadPetPic = services.uploadPetImage(petId, part);
-        Response<BaseResponse> response = getResponse(uploadPetPic,true,"uploadPetPicture -> PetStoreServices");
-        log.new Info(response.headers());
+        Response<BaseResponse> response = getResponse(uploadPetPic,true, true, "uploadPetPicture -> PetStoreServices");
+        log.new Info("The headers are: " + "\n" + response.headers());
         assert response.body() != null;
-        log.new Info(response.body().getMessage());
+        log.new Info("The response message is: " + response.body().getMessage());
         Assert.assertEquals("application/json", response.headers().get("content-type"));
     }
 }
