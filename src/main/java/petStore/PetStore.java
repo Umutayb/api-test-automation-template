@@ -12,6 +12,7 @@ import utils.Caller;
 import utils.Printer;
 import utils.ServiceGenerator;
 import java.io.File;
+import java.net.URLConnection;
 import java.util.List;
 
 public class  PetStore extends Caller {
@@ -55,7 +56,7 @@ public class  PetStore extends Caller {
 
     public void uploadPetPicture(Long petId, String pictureUrl){
         File file = new File(pictureUrl);
-        RequestBody fileBody = RequestBody.create(file, MediaType.parse("image/png"));
+        RequestBody fileBody = RequestBody.create(file, MediaType.parse(URLConnection.guessContentTypeFromName(file.getName())));
         MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(),fileBody);
         Call<BaseResponse> uploadPetPic = services.uploadPetImage(petId, part);
         Response<BaseResponse> response = getResponse(uploadPetPic,true, true, "uploadPetPicture -> PetStoreServices");
