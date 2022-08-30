@@ -1,76 +1,28 @@
-# Quickstart Library
+## API Test Automation With Retrofit
 
-### How To Get Started:
+In this feature i demonstrate my api test automation design, combining **retrofit2, OkHttp3 & BDD**. I have implemented
+**26 api requests**, representing various interactions with Gitlab, including creating a project, creating an issue in a
+given project, print all issues in a project, update issues in a project, clone issue in a project, delete issue in a
+project smf acquiring issues filtered by author, assignee, state, title, description & labels.
+The project also has built in slack integration, built in the same design with the rest of the project.
 
-First, the library should be exported into an empty automation project. There are two ways of doing this.
-### First Way:
+To counter the amount of content in the feature file (and considering my tight schedule) i have implemented various
+BDD steps, but did not compose scenarios with them. I believe the design speaks for itself and composing test multiple
+scenarios & steps will not prove much, as all the utility is already implemented.
 
-[![](https://jitpack.io/v/umutayb/api-assured.svg)](https://jitpack.io/#umutayb/api-assured)
+### Please see:
 
-The dependency can be acquired by adding Jitpack repository into the pom.xml, as well as the dependency for the library as:
-```xml
-<dependencies>
-    <!-- Framework -->
-        <dependency>
-            <groupId>com.github.Umutayb</groupId>
-            <artifactId>Api-Assured</artifactId>
-            <version>0.2.2</version>
-        </dependency>   
-</dependencies>
-.
-.
-.
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-```
-### Second Way:
-```shell
-mvn clean package -DbuildDirectory=directory/to/project/lib
-```
-For instance:
-```shell
-mvn clean package -DbuildDirectory=/Users/Umut/Github/Api-Automation-Sample-Cucumber/lib
-```
-There, the imported jar file should be added as a dependency in pom.xml file of that project:
-```xml
-    <!-- Framework -->
-        <dependency>
-            <groupId>bora</groupId>
-            <artifactId>API-Framework-0.1.8.jar</artifactId>
-            <version>0.0.2</version>
-            <systemPath>${project.basedir}/lib/API-FRAMEWORK-0.1.8.jar</systemPath>
-            <scope>system</scope>
-            <type>jar</type>
-        </dependency>
+    src/main/java/gitlab/GitlabServices.java
+    src/main/java/gitlab/Gitlab.java 
+    src/test/java/steps/IssuesSteps.java
+
+### Running:
+Running the tests are done by combining feature and scenario tags.
+
+``` shell
+mvn -B clean test -q -Dcucumber.filter.tags="@GitlabIssues and @IssueCreation"
 ```
 
-After updating your project, the quickstart library is ready to use.
-___
-### How To Use:
-
-The quickstart library consists of many utility methods and a ready to use built in Rest Assured support using Retrofit 2 and OkHttp.
-The infrastructure allows easy representation of endpoints with Retrofit interfaces.
-
-#### Example execution command:
-In order to execute a specific feature file in a specific browser, use:
- ```shell
->mvn clean test -Dcucumber.options="--tags @PetStore"
- ```
-
-#### To create a cucumber project:
-Run the following command:
-````shell
-mvn archetype:generate                      \
-"-DarchetypeGroupId=io.cucumber"            \
-"-DarchetypeArtifactId=cucumber-archetype"  \
-"-DarchetypeVersion=6.10.4"                 \
-"-DgroupId=hellocucumber"                   \
-"-DartifactId=hellocucumber"                \
-"-Dpackage=hellocucumber"                   \
-"-Dversion=0.0.1"                           \
-"-DinteractiveMode=false"
-````
+Please remember to clone the repository, create a gitlab token and update the gitlab-token property 
+within test.properties (src/test/resources/test.properties) file. Add the id of your newly created 
+project to the Project.java enum & Finally update the scenario with the name of your new enum.
