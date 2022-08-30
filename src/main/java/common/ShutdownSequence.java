@@ -36,19 +36,6 @@ public class ShutdownSequence extends Utilities {
                     }
                     threadMessage.append("!");
                     slack.postThreadMessage(threadMessage.toString(), channelId, ts);
-                    slack.postThreadMessage("Screenshots:", channelId, ts);
-                    File dir = new File("screenshots");
-                    File[] screenshots = dir.listFiles();
-                    String fileName = "";
-                    assert screenshots != null;
-                    for (File screenshot : screenshots) {
-                        String mediaType;
-                        try {mediaType = Files.probeContentType(screenshot.toPath());}
-                        catch (IOException e) {throw new RuntimeException(e);}
-                        if (mediaType.equals("image/jpeg") && !fileName.equals(screenshot.getName()))
-                            slack.postMultipartThreadMessage(screenshot, screenshot.getName(), channelId, ts);
-                        fileName = screenshot.getName();
-                    }
                     log.new Success("Reports are posted on slack.");
                 }
             }
