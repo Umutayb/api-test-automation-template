@@ -1,9 +1,11 @@
 package common;
 
+import api_assured.ApiUtilities;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gpt.api.GPT;
 import io.cucumber.java.Scenario;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
@@ -12,20 +14,19 @@ import org.json.simple.JSONArray;
 import models.commons.Receivers;
 import java.util.ArrayList;
 import java.util.Properties;
-import resources.Colors;
 import utils.*;
 
 import java.util.List;
 import java.io.*;
 
-import static resources.Colors.RESET;
 
-public abstract class Utilities extends Caller {
+public abstract class Utilities extends ApiUtilities {
     public static Scenario scenario;
-    public static Properties properties;
+    public static PropertiesReader properties = new PropertiesReader("test.properties");
 
+    public static GPT gpt = new GPT(properties.getProperty("GPT-token"));
     public static ObjectMapper mapper = new ObjectMapper();
-    public static ObjectUtilities objectUtils = new ObjectUtilities();
+    public static ReflectionUtilities reflectionUtils = new ReflectionUtilities();
     public static NumericUtilities numUtils = new NumericUtilities();
     public static StringUtilities strUtils = new StringUtilities();
 
@@ -34,12 +35,9 @@ public abstract class Utilities extends Caller {
     Printer log = new Printer(Utilities.class);
 
     public Utilities(){
-        properties = FileUtilities.properties;
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
-
-    public String highlighted(Color color, String text){return (objectUtils.getFieldValue(color.name(), Colors.class) + text + RESET);}
 
     public List<Receivers.Receiver> getReceivers() {
         try(FileReader file = new FileReader(properties.getProperty("receivers-directory"))) {

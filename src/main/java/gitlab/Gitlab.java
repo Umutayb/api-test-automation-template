@@ -1,17 +1,14 @@
 package gitlab;
 
-import common.Utilities;
+import api_assured.*;
 import gitlab.enums.Project;
 import gitlab.enums.Visibility;
 import models.gitlab.Issue;
 import okhttp3.Headers;
 import retrofit2.Call;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-import utils.ServiceGenerator;
 import java.util.List;
 
-public class Gitlab extends Utilities {
+public class Gitlab extends ApiUtilities {
 
     GitlabServices gitlabServices = new ServiceGenerator(
             new Headers.Builder().add("PRIVATE-TOKEN", properties.getProperty("gitlab-token")).build()

@@ -5,17 +5,17 @@ import models.commons.Receivers;
 import models.slack.SuccessfulMessage;
 import slack.Slack;
 import utils.Printer;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import utils.StringUtilities;
+
 import java.util.List;
 
 public class ShutdownSequence extends Utilities {
     static Printer log = new Printer(ShutdownSequence.class);
     static Slack slack = new Slack();
+    StringUtilities strUtils = new StringUtilities();
 
     public void publishReports(String testName){ // This method is called upon after the tests are done running
-        log.new Info("Performing final sequence for the test specification: " + highlighted(Color.PURPLE,testName));
+        log.new Info("Performing final sequence for the test specification: " + strUtils.highlighted(StringUtilities.Color.PURPLE,testName));
         if (Boolean.parseBoolean(properties.getProperty("notify-slack"))) {
             try {
                 String directory = properties.getProperty("report-directory");
