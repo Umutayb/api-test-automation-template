@@ -16,7 +16,6 @@ public class CommonSteps extends ApiUtilities {
 
     Authorisation auth = new Authorisation();
 
-
     @Before
     public void before(Scenario scenario){
         Utilities.scenario = scenario;
@@ -24,7 +23,6 @@ public class CommonSteps extends ApiUtilities {
             auth.createUserWithGpt();
             auth.generateTokenForContext();
         }
-
     }
 
     @After

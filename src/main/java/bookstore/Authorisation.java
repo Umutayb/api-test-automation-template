@@ -12,6 +12,7 @@ import models.bookstore.UserResponse;
 import retrofit2.Call;
 
 public class Authorisation extends ApiUtilities {
+
     BookStoreServices bookStore = new ServiceGenerator().generate(BookStoreServices.class);
     DataGenerator generator = new DataGenerator(Utilities.gpt);
 
@@ -44,4 +45,5 @@ public class Authorisation extends ApiUtilities {
         else log.new Success("Token generated successfully");
         ContextStore.put("token", tokenResponse.getToken());
     }
+
 }
