@@ -4,7 +4,7 @@
 
     <groupId>bora</groupId>
     <artifactId>Api-Automation</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.2</version>
     <packaging>jar</packaging>
     <name>Api Automation</name>
     <url>https://github.com/Umutayb/Api-Automation-Sample</url>
