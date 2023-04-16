@@ -1,6 +1,6 @@
 package steps;
 
-import context.TestStore;
+import context.ContextStore;
 import gitlab.Gitlab;
 import gitlab.enums.Project;
 import gitlab.enums.Visibility;
@@ -49,7 +49,7 @@ public class IssuesSteps {
 
     @Given("Delete last issue created")
     public void deleteLastIssue(){
-        Issue issue = (Issue) TestStore.get("issueInContext");
+        Issue issue = (Issue) ContextStore.get("issueInContext");
         gitlab.deleteIssue(issue.project_id(), issue.iid());
     }
 }

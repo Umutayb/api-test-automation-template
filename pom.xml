@@ -6,13 +6,13 @@
     <artifactId>Api-Automation</artifactId>
     <version>0.1.1</version>
     <packaging>jar</packaging>
-    <name>Api Automation</name>
+    <name>Api Automation Sample</name>
     <url>https://github.com/Umutayb/Api-Automation-Sample</url>
 
     <properties>
         <name>${project.name}</name>
-        <cucumber.version>4.8.0</cucumber.version>
-        <api.framework.version>0.7.4</api.framework.version>
+        <cucumber.version>7.11.1</cucumber.version>
+        <api.framework.version>1.4.2</api.framework.version>
         <maven.surefire.version>2.22.1</maven.surefire.version>
         <cucumber.version>7.6.0</cucumber.version>
         <retrofit.version>2.9.0</retrofit.version>
@@ -20,11 +20,18 @@
     </properties>
 
     <dependencies>
-        <!-- Api Assured -->
+        <!-- Java Utilities / Api Assured -->
         <dependency>
-            <groupId>com.github.umutayb</groupId>
-            <artifactId>api-assured</artifactId>
-            <version>${api.framework.version}</version>
+            <groupId>io.github.umutayb</groupId>
+            <artifactId>Utilities</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+
+        <!-- GPT Utilities -->
+        <dependency>
+            <groupId>io.github.umutayb</groupId>
+            <artifactId>gpt-utilities</artifactId>
+            <version>0.0.7</version>
         </dependency>
 
         <!-- Commons -->
@@ -84,6 +91,14 @@
             <groupId>io.cucumber</groupId>
             <artifactId>datatable-dependencies</artifactId>
             <version>3.0.0</version>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

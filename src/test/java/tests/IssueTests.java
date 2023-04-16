@@ -1,18 +1,16 @@
 package tests;
 
 import common.Utilities;
-import context.TestStore;
+import context.ContextStore;
 import gitlab.Gitlab;
 import gitlab.enums.Person;
 import gitlab.enums.Project;
 import models.commons.DateModel;
 import models.gitlab.Issue;
 import org.junit.Assert;
-import retrofit2.Call;
 import utils.Printer;
 import utils.StringUtilities;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -44,6 +42,6 @@ public class IssueTests extends Utilities {
 
         log.new Success("Issue creation verifications complete.");
 
-        TestStore.put("issueInContext", issue);
+        ContextStore.put("issueInContext", issue);
     }
 }

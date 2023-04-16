@@ -1,16 +1,21 @@
 package steps;
 
+import api_assured.ApiUtilities;
+import bookstore.BookStore;
 import io.cucumber.java.*;
 import common.Utilities;
-import utils.Printer;
 
-public class CommonSteps{
+public class CommonSteps extends ApiUtilities {
 
-    Printer log = new Printer(CommonSteps.class);
+    BookStore bookStore = new BookStore();
 
     @Before
     public void before(Scenario scenario){
         Utilities.scenario = scenario;
+        if (scenario.getSourceTagNames().contains("@BookStoreAuthentication")){
+            bookStore.createUserWithGpt();
+            bookStore.generateTokenForContext();
+        }
     }
 
     @After
@@ -18,4 +23,5 @@ public class CommonSteps{
         if (scenario.isFailed()){log.new Warning(scenario.getName() + ": FAILED!");}
         else log.new Success(scenario.getName() + ": PASS!");
     }
+
 }
