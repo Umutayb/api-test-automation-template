@@ -6,7 +6,7 @@
     <artifactId>Api-Automation</artifactId>
     <version>0.1.1</version>
     <packaging>jar</packaging>
-    <name>Api Automation</name>
+    <name>Api Automation Sample</name>
     <url>https://github.com/Umutayb/Api-Automation-Sample</url>
 
     <properties>

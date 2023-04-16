@@ -12,7 +12,7 @@ public class CommonSteps extends ApiUtilities {
     @Before
     public void before(Scenario scenario){
         Utilities.scenario = scenario;
-        if (scenario.getSourceTagNames().contains("@Authorise")){
+        if (scenario.getSourceTagNames().contains("@BookStoreAuthentication")){
             bookStore.createUserWithGpt();
             bookStore.generateTokenForContext();
         }

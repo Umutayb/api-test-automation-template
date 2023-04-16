@@ -1,11 +1,11 @@
+@BookStore
 Feature: BookStore
-
   Scenario: Generate random user
     * Create a randomized user
     * Generate token for the user in context
     * Delete the user in context
 
-  @Authorise
+  @BookStoreAuthentication @SCN-Post-Book-Test
   Scenario: Post book
     * Get all books from database
     * Post books by publisher named O'Reilly Media to the user in context
