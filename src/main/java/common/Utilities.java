@@ -24,7 +24,7 @@ public abstract class Utilities extends ApiUtilities {
     public static Scenario scenario;
     public static PropertiesReader properties = new PropertiesReader("test.properties");
 
-    public static GPT gpt = new GPT(properties.getProperty("GPT-token"));
+    public static GPT gpt = new GPT(properties.getProperty("gpt-token"));
     public static ObjectMapper mapper = new ObjectMapper();
     public static ReflectionUtilities reflectionUtils = new ReflectionUtilities();
     public static NumericUtilities numUtils = new NumericUtilities();

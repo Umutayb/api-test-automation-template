@@ -1,6 +1,5 @@
 package steps;
 
-import bookstore.Authorisation;
 import bookstore.BookStore;
 import common.Utilities;
 import context.ContextStore;
@@ -10,8 +9,6 @@ import io.cucumber.java.en.Given;
 import models.bookstore.*;
 import org.junit.Assert;
 import utils.StringUtilities;
-
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +19,6 @@ public class BookStoreSteps {
 
     BookStore bookStore = new BookStore();
     StringUtilities strUtils = new StringUtilities();
-    Authorisation authorisation = new Authorisation();
     DataGenerator generator = new DataGenerator(Utilities.gpt);
 
     @Given("Get all books from database")
@@ -37,7 +33,7 @@ public class BookStoreSteps {
         CredentialModel user = new CredentialModel();
         user.setUserName(userMap.get("Username"));
         user.setPassword(userMap.get("Password"));
-        UserResponse userResponse = authorisation.createUser(user);
+        UserResponse userResponse = bookStore.createUser(user);
         ContextStore.put("user", user);
         ContextStore.put("userId", userResponse.getUserID());
         bookStore.log.new Success("User created successfully");
@@ -46,7 +42,7 @@ public class BookStoreSteps {
     @Given("Create a randomized user")
     public void createUserWithGpt() {
         CredentialModel user = generator.instantiate(CredentialModel.class);
-        UserResponse userResponse = authorisation.createUser(user);
+        UserResponse userResponse = bookStore.createUser(user);
         ContextStore.put("user", user);
         ContextStore.put("userId", userResponse.getUserID());
         bookStore.log.new Success("User created successfully");
@@ -59,7 +55,7 @@ public class BookStoreSteps {
         user.setUserName(userMap.get("Username"));
         user.setPassword(userMap.get("Password"));
 
-        TokenResponse tokenResponse = authorisation.generateToken(user);
+        TokenResponse tokenResponse = bookStore.generateToken(user);
         if (tokenResponse.getStatus().equalsIgnoreCase("failed"))
             bookStore.log.new Warning("Process failed");
         else bookStore.log.new Success("Token generated successfully");
@@ -67,47 +63,10 @@ public class BookStoreSteps {
 
     @Given("Generate token for the user in context")
     public void generateTokenForContext() {
-        TokenResponse tokenResponse = authorisation.generateToken(ContextStore.get("user"));
+        TokenResponse tokenResponse = bookStore.generateToken(ContextStore.get("user"));
         if (tokenResponse.getStatus().equalsIgnoreCase("failed"))
             bookStore.log.new Warning("Process failed");
         else bookStore.log.new Success("Token generated successfully");
-    }
-
-    @Given("Delete user by Id: {}")
-    public void deleteUserById(String userId) {
-        bookStore.deleteUser(userId);
-        bookStore.log.new Success("User deleted successfully");
-    }
-
-    @Given("Delete the user in context")
-    public void deleteUserInContext() {
-        deleteUserById(ContextStore.get("userId"));
-    }
-
-    @Given("Post books by publisher named {} to the user in context")
-    public void postBooks(String publisher) {
-        List<CollectionOfIsbn.IsbnModel> isbns = new ArrayList<>();
-        String userId = ContextStore.get("userId");
-
-        for (BookModel book: bookStore.getAllBooks().getBooks())
-            if (book.getPublisher().equalsIgnoreCase(publisher))
-                isbns.add(new CollectionOfIsbn.IsbnModel(book.getIsbn()));
-        CollectionOfIsbn collection = new CollectionOfIsbn(userId, isbns);
-
-        PostBookResponse bookResponse = bookStore.postBooks(collection);
-        ContextStore.put("postedBooks", bookResponse);
-        bookStore.log.new Success("Books posted successfully");
-    }
-
-    @Given("Get user by id: {}")
-    public void getUser(String userId) {
-        UserResponse userResponse = bookStore.getUser(userId);
-        ContextStore.put("userResponse", userResponse);
-    }
-
-    @Given("Get user in context")
-    public void getUserInContext() {
-        getUser(ContextStore.get("userId").toString());
     }
 
     @Given("Verify isbn numbers for posted books")
